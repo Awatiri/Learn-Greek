@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn Greek on the go. We have democratized the learning process with interactive lessons, quizzes, and gamified progress tracking.">
+    <meta name="keywords" content="Greek, Hellenic, Greece, Greek Language, Elliniká, Learn Greek, Greek Alphabet, Greek Lessons">
+    <meta name="author" content="Basic Greek Language Course">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://basicgreek.example.com/">
+    <meta property="og:title" content="Basic Greek Language Course - Learn Greek Interactively">
+    <meta property="og:description" content="Learn Greek on the go. We have democratized the learning process with interactive lessons, quizzes, and gamified progress tracking.">
+    <meta property="og:image" content="https://basicgreek.example.com/assets/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://basicgreek.example.com/">
+    <meta property="twitter:title" content="Basic Greek Language Course - Learn Greek Interactively">
+    <meta property="twitter:description" content="Learn Greek on the go. We have democratized the learning process with interactive lessons, quizzes, and gamified progress tracking.">
+    <meta property="twitter:image" content="https://basicgreek.example.com/assets/og-image.jpg">
+
+    <link rel="canonical" href="https://basicgreek.example.com/">
+    <title>Basic Greek Language Course - Learn Greek Interactively</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#64748B',
+                        accent: '#F97316',
+                        success: '#10B981',
+                        warning: '#F59E0B',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "Basic Greek Language Course",
+        "description": "Interactive Greek language learning platform with gamified lessons and progress tracking",
+        "url": "https://basicgreek.example.com",
+        "logo": "https://basicgreek.example.com/assets/logo.png",
+        "sameAs": [],
+        "potentialAction": {
+            "@type": "LearnAction",
+            "target": {
+                "@type": "Course",
+                "name": "Basic Greek Language Course",
+                "description": "Learn Greek through interactive lessons, alphabet practice, and vocabulary building",
+                "provider": {
+                    "@type": "EducationalOrganization",
+                    "name": "Basic Greek Language Course"
+                }
+            }
+        }
+    }
+    </script>
+
+    <style>
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(249, 115, 22, 0.1) 100%),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="greek-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="2" fill="%233B82F6" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23greek-pattern)"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .greek-text {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.2em;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #3B82F6 0%, #10B981 100%);
+        }
+        
+        .sound-off {
+            opacity: 0.5;
+        }
+        
+        .lesson-locked {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .lesson-completed {
+            border-color: #10B981;
+            background-color: rgba(16, 185, 129, 0.1);
+        }
+        
+        .celebration {
+            animation: celebrate 0.6s ease-out;
+        }
+        
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .greek-letter {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3B82F6;
+        }
+        
+        .canvas-area {
+            border: 2px dashed #CBD5E1;
+            background: #F8FAFC;
+        }
+        
+        .modal {
+            backdrop-filter: blur(4px);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .dark .canvas-area {
+                background: #1E293B;
+                border-color: #475569;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <!-- Header -->
+    <header class="fixed w-full top-0 z-50 transition-all duration-300" id="header">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                    <span class="text-white font-bold text-lg">Γ</span>
+                </div>
+                <span class="text-xl font-bold">GreekLearn</span>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#lessons" class="hover:text-primary transition-colors">Lessons</a>
+                <a href="#alphabet" class="hover:text-primary transition-colors">Alphabet</a>
+                <a href="#simulation" class="hover:text-primary transition-colors">Practice</a>
+                <a href="#vocabulary" class="hover:text-primary transition-colors">Vocabulary</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button id="soundToggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" title="Toggle Sound">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.835L4.29 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.29l4.093-3.835a1 1 0 011 .911zM13 8.658V11.342a1 1 0 01-.293.707l-1.414 1.414a1 1 0 11-1.414-1.414l.707-.707a1 1 0 010-1.414l-.707-.707a1 1 0 111.414-1.414L13 8.658z"></path>
+                    </svg>
+                </button>
+                <button id="mobileMenuToggle" class="md:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-900 border-t dark:border-gray-800 px-4 py-4">
+            <div class="flex flex-col space-y-4">
+                <a href="#lessons" class="hover:text-primary transition-colors">Lessons</a>
+                <a href="#alphabet" class="hover:text-primary transition-colors">Alphabet</a>
+                <a href="#simulation" class="hover:text-primary transition-colors">Practice</a>
+                <a href="#vocabulary" class="hover:text-primary transition-colors">Vocabulary</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-orange-50/50 dark:from-blue-900/20 dark:to-orange-900/20"></div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Learn Greek — Master in Steps
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+                Turbocharge your Greek learning anywhere, anytime with our interactive lessons, gamified progress, and comprehensive vocabulary building.
+            </p>
+            
+            <!-- Progress Dashboard -->
+            <div id="progressDashboard" class="max-w-2xl mx-auto mb-8 p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-lg">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold">Your Progress</h3>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-accent font-bold text-lg" id="tokenCount">0</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400">tokens</span>
+                    </div>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-4">
+                    <div id="progressBar" class="progress-bar h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+                    <span>Lessons Completed: <span id="completedLessons">0</span>/6</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+            </div>
+            
+            <a href="#lessons" class="inline-flex items-center px-8 py-4 bg-primary text-white rounded-full text-lg font-semibold hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+                Start Learning
+                <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Lessons Section -->
+    <section id="lessons" class="py-20 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Interactive Lessons</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    Progressive learning path with quizzes and instant feedback. Complete each lesson to unlock the next.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Lesson cards will be dynamically generated -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Greek Alphabet Section -->
+    <section id="alphabet" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Greek Alphabet</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    Master the 24 letters of the Greek alphabet with pronunciation guides.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
+                <!-- Alphabet cards will be dynamically generated -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Simulation Section -->
+    <section id="simulation" class="py-20 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Practice Writing</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    Interactive canvas to practice writing Greek letters and words.
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8">
+                    <div class="mb-6">
+                        <label for="practiceSelect" class="block text-sm font-medium mb-2">Choose what to practice:</label>
+                        <select id="practiceSelect" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-800 text-base">
+                            <option value="alphabet">Greek Alphabet</option>
+                            <option value="words">Basic Words</option>
+                            <option value="sentences">Simple Sentences</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold mb-4">Practice: <span id="currentPractice">Α (Alpha)</span></h3>
+                        <div class="canvas-area rounded-lg p-8 min-h-64 flex items-center justify-center text-gray-500 dark:text-gray-400">
+                            <div class="text-center">
+                                <p class="mb-4">Use your mouse or finger to practice writing</p>
+                                <div id="practiceDisplay" class="greek-letter mb-4">Α</div>
+                                <button id="clearCanvas" class="px-4 py-2 bg-secondary text-white rounded-lg hover:bg-gray-600 transition-colors">
+                                    Clear
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between">
+                        <button id="prevPractice" class="px-6 py-3 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">
+                            Previous
+                        </button>
+                        <button id="nextPractice" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors">
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vocabulary Section -->
+    <section id="vocabulary" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Essential Vocabulary</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    Basic verbs, adjectives, and sentence structure to build your foundation.
+                </p>
+            </div>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="grid md:grid-cols-3 gap-8 mb-12">
+                    <!-- Verbs -->
+                    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-primary">Common Verbs</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                                <span class="greek-text">είμαι</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">to be</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                                <span class="greek-text">έχω</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">to have</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                                <span class="greek-text">κάνω</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">to do/make</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                                <span class="greek-text">πηγαίνω</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">to go</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2">
+                                <span class="greek-text">βλέπω</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">to see</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Adjectives -->
+                    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-accent">Adjectives</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                                <span class="greek-text">καλός</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">good</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                                <span class="greek-text">μεγάλος</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">big</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                                <span class="greek-text">μικρός</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">small</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                                <span class="greek-text">όμορφος</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">beautiful</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2">
+                                <span class="greek-text">νέος</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">new/young</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sentence Structure -->
+                    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-success">Sentence Structure</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-semibold mb-2">Basic Order:</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Subject + Verb + Object</p>
+                                <p class="greek-text text-sm">Ο Γιάννης τρώει μήλο</p>
+                                <p class="text-xs text-gray-500">John eats apple</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2">Articles:</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">ο, η, το (the)</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">ένας, μία, ένα (a/an)</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2">Question Words:</h4>
+                                <p class="text-sm"><span class="greek-text">τι;</span> (what?)</p>
+                                <p class="text-sm"><span class="greek-text">που;</span> (where?)</p>
+                                <p class="text-sm"><span class="greek-text">πότε;</span> (when?)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-2 mb-4">
+                    <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">Γ</span>
+                    </div>
+                    <span class="text-xl font-bold">GreekLearn</span>
+                </div>
+                <p class="text-gray-400 mb-8">Democratizing Greek language learning through interactive, gamified education.</p>
+                <div class="text-sm text-gray-500">
+                    <p>&copy; 2024 GreekLearn. Made with ❤️ for Greek language enthusiasts.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 modal z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-md w-full p-8 fade-in">
+            <h3 class="text-2xl font-bold mb-4">Login Required</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-6">Please enter your username and 5-digit password to continue with the lessons.</p>
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label for="username" class="block text-sm font-medium mb-2">Username</label>
+                    <input type="text" id="username" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-800 text-base" required>
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-medium mb-2">5-Digit Password</label>
+                    <input type="password" id="password" pattern="[0-9]{5}" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-800 text-base" maxlength="5" required>
+                </div>
+                <div class="flex justify-end space-x-3 pt-4">
+                    <button type="button" onclick="closeModal('loginModal')" class="px-6 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">Cancel</button>
+                    <button type="submit" class="px-6 py-3 bg-primary text-white hover:bg-blue-600 rounded-lg transition-colors">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Quiz Modal -->
+    <div id="quizModal" class="hidden fixed inset-0 bg-black bg-opacity-50 modal z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-2xl w-full p-8 fade-in">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold" id="quizTitle">Lesson Quiz</h3>
+                <span class="text-sm text-gray-500" id="quizProgress">Question 1 of 3</span>
+            </div>
+            <div id="quizContent">
+                <!-- Quiz content will be dynamically inserted -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Celebration Modal -->
+    <div id="celebrationModal" class="hidden fixed inset-0 bg-black bg-opacity-50 modal z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-md w-full p-8 text-center celebration">
+            <div class="text-6xl mb-4">🎉</div>
+            <h3 class="text-2xl font-bold mb-4 text-success">Congratulations!</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-6" id="celebrationMessage">You've completed the lesson!</p>
+            <div class="flex justify-center items-center space-x-2 mb-6">
+                <span class="text-accent font-bold text-2xl">+10</span>
+                <span class="text-lg">tokens earned!</span>
+            </div>
+            <button onclick="closeModal('celebrationModal')" class="px-8 py-3 bg-success text-white hover:bg-green-600 rounded-lg transition-colors">
+                Continue Learning
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Application State
+        let appState = {
+            soundEnabled: true,
+            currentUser: null,
+            completedLessons: [],
+            totalTokens: 0,
+            currentQuiz: null,
+            currentPractice: 0
+        };
+
+        // Load state from localStorage
+        function loadState() {
+            const saved = localStorage.getItem('greekLearnState');
+            if (saved) {
+                appState = { ...appState, ...JSON.parse(saved) };
+            }
+            updateUI();
+        }
+
+        // Save state to localStorage
+        function saveState() {
+            localStorage.setItem('greekLearnState', JSON.stringify(appState));
+        }
+
+        // Lessons Data
+        const lessons = [
+            {
+                id: 1,
+                title: "Greek Alphabet Basics",
+                description: "Learn the first 8 letters of the Greek alphabet",
+                content: `
+                    <h3 class="text-xl font-bold mb-4">Welcome to Greek!</h3>
+                    <p class="mb-4">The Greek alphabet has 24 letters. Let's start with the first 8:</p>
+                    <div class="grid grid-cols-4 gap-4 mb-6">
+                        <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-letter text-2xl mb-2">Α α</div>
+                            <div class="text-sm">Alpha</div>
+                        </div>
+                        <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-letter text-2xl mb-2">Β β</div>
+                            <div class="text-sm">Beta</div>
+                        </div>
+                        <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-letter text-2xl mb-2">Γ γ</div>
+                            <div class="text-sm">Gamma</div>
+                        </div>
+                        <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-letter text-2xl mb-2">Δ δ</div>
+                            <div class="text-sm">Delta</div>
+                        </div>
+                    </div>
+                    <p class="mb-4">These letters are the foundation of the Greek language. Practice writing them and remember their sounds.</p>
+                `,
+                quiz: [
+                    {
+                        question: "What is the first letter of the Greek alphabet?",
+                        options: ["Alpha", "Beta", "Gamma", "Delta"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which Greek letter corresponds to the English 'B'?",
+                        options: ["Alpha", "Beta", "Gamma", "Delta"],
+                        correct: 1
+                    },
+                    {
+                        question: "What is the fourth letter shown in this lesson?",
+                        options: ["Alpha", "Beta", "Gamma", "Delta"],
+                        correct: 3
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "More Greek Letters",
+                description: "Continue with letters Epsilon through Theta",
+                content: `
+                    <h3 class="text-xl font-bold mb-4">Continuing the Alphabet</h3>
+                    <p class="mb-4">Let's learn the next letters:</p>
+                    <div class="grid grid-cols-4 gap-4 mb-6">
+                        <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-letter text-2xl mb-2">Ε ε</div>
+                            <div class="text-sm">Epsilon</div>
+                        </div>
+                        <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-letter text-2xl mb-2">Ζ ζ</div>
+                            <div class="text-sm">Zeta</div>
+                        </div>
+                        <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-letter text-2xl mb-2">Η η</div>
+                            <div class="text-sm">Eta</div>
+                        </div>
+                        <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-letter text-2xl mb-2">Θ θ</div>
+                            <div class="text-sm">Theta</div>
+                        </div>
+                    </div>
+                    <p class="mb-4">Notice how some letters look similar to English letters but may have different sounds.</p>
+                `,
+                quiz: [
+                    {
+                        question: "Which letter looks like the English 'E'?",
+                        options: ["Epsilon", "Zeta", "Eta", "Theta"],
+                        correct: 0
+                    },
+                    {
+                        question: "What is the Greek letter Θ called?",
+                        options: ["Epsilon", "Zeta", "Eta", "Theta"],
+                        correct: 3
+                    },
+                    {
+                        question: "Which of these is the seventh letter of the Greek alphabet?",
+                        options: ["Epsilon", "Zeta", "Eta", "Theta"],
+                        correct: 2
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Basic Greetings",
+                description: "Learn essential Greek greetings and responses",
+                content: `
+                    <h3 class="text-xl font-bold mb-4">Greek Greetings</h3>
+                    <p class="mb-4">Master these essential greetings:</p>
+                    <div class="space-y-4 mb-6">
+                        <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-text text-lg mb-2">Γεια σας</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Hello (formal) / Goodbye</div>
+                        </div>
+                        <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-text text-lg mb-2">Γεια σου</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Hello (informal) / Goodbye</div>
+                        </div>
+                        <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-text text-lg mb-2">Καλημέρα</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Good morning</div>
+                        </div>
+                        <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-text text-lg mb-2">Καλησπέρα</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Good evening</div>
+                        </div>
+                    </div>
+                    <p class="mb-4">Use 'Γεια σας' with strangers and older people, 'Γεια σου' with friends and family.</p>
+                `,
+                quiz: [
+                    {
+                        question: "What does 'Γεια σας' mean?",
+                        options: ["Good morning", "Hello/Goodbye (formal)", "Good night", "Thank you"],
+                        correct: 1
+                    },
+                    {
+                        question: "Which greeting would you use with a friend?",
+                        options: ["Γεια σας", "Γεια σου", "Καλημέρα", "Καλησπέρα"],
+                        correct: 1
+                    },
+                    {
+                        question: "What do you say in the evening?",
+                        options: ["Γεια σας", "Γεια σου", "Καλημέρα", "Καλησπέρα"],
+                        correct: 3
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Numbers 1-10",
+                description: "Learn to count from one to ten in Greek",
+                content: `
+                    <h3 class="text-xl font-bold mb-4">Greek Numbers</h3>
+                    <p class="mb-4">Learn to count from 1 to 10:</p>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="space-y-3">
+                            <div class="flex justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                <span class="font-semibold">1</span>
+                                <span class="greek-text">ένα</span>
+                            </div>
+                            <div class="flex justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                <span class="font-semibold">2</span>
+                                <span class="greek-text">δύο</span>
+                            </div>
+                            <div class="flex justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                <span class="font-semibold">3</span>
+                                <span class="greek-text">τρία</span>
+                            </div>
+                            <div class="flex justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                <span class="font-semibold">4</span>
+                                <span class="greek-text">τέσσερα</span>
+                            </div>
+                            <div class="flex justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                <span class="font-semibold">5</span>
+                                <span class="greek-text">πέντε</span>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                <span class="font-semibold">6</span>
+                                <span class="greek-text">έξι</span>
+                            </div>
+                            <div class="flex justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                <span class="font-semibold">7</span>
+                                <span class="greek-text">επτά</span>
+                            </div>
+                            <div class="flex justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                <span class="font-semibold">8</span>
+                                <span class="greek-text">οκτώ</span>
+                            </div>
+                            <div class="flex justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                <span class="font-semibold">9</span>
+                                <span class="greek-text">εννιά</span>
+                            </div>
+                            <div class="flex justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                <span class="font-semibold">10</span>
+                                <span class="greek-text">δέκα</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-4">Practice counting out loud to improve your pronunciation!</p>
+                `,
+                quiz: [
+                    {
+                        question: "How do you say 'five' in Greek?",
+                        options: ["τέσσερα", "πέντε", "έξι", "επτά"],
+                        correct: 1
+                    },
+                    {
+                        question: "What number is 'οκτώ'?",
+                        options: ["6", "7", "8", "9"],
+                        correct: 2
+                    },
+                    {
+                        question: "Which is the Greek word for 'ten'?",
+                        options: ["εννιά", "δέκα", "επτά", "έξι"],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 5,
+                title: "Common Phrases",
+                description: "Essential phrases for daily conversation",
+                content: `
+                    <h3 class="text-xl font-bold mb-4">Useful Phrases</h3>
+                    <p class="mb-4">Master these essential phrases:</p>
+                    <div class="space-y-4 mb-6">
+                        <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-text text-lg mb-2">Παρακαλώ</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Please / You're welcome</div>
+                        </div>
+                        <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-text text-lg mb-2">Ευχαριστώ</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Thank you</div>
+                        </div>
+                        <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-text text-lg mb-2">Συγγνώμη</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Excuse me / Sorry</div>
+                        </div>
+                        <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-text text-lg mb-2">Δεν καταλαβαίνω</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">I don't understand</div>
+                        </div>
+                        <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                            <div class="greek-text text-lg mb-2">Μιλάτε αγγλικά;</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Do you speak English?</div>
+                        </div>
+                    </div>
+                    <p class="mb-4">These phrases will help you in most basic conversations!</p>
+                `,
+                quiz: [
+                    {
+                        question: "How do you say 'thank you' in Greek?",
+                        options: ["Παρακαλώ", "Ευχαριστώ", "Συγγνώμη", "Γεια σας"],
+                        correct: 1
+                    },
+                    {
+                        question: "What does 'Παρακαλώ' mean?",
+                        options: ["Sorry", "Thank you", "Please/You're welcome", "Hello"],
+                        correct: 2
+                    },
+                    {
+                        question: "If you don't understand something, you say:",
+                        options: ["Συγγνώμη", "Παρακαλώ", "Δεν καταλαβαίνω", "Ευχαριστώ"],
+                        correct: 2
+                    }
+                ]
+            },
+            {
+                id: 6,
+                title: "Basic Conversation",
+                description: "Put it all together in simple dialogues",
+                content: `
+                    <h3 class="text-xl font-bold mb-4">Simple Conversations</h3>
+                    <p class="mb-4">Let's practice a basic conversation:</p>
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-6">
+                        <h4 class="font-semibold mb-4">Dialogue: Meeting Someone</h4>
+                        <div class="space-y-3">
+                            <div>
+                                <strong>Person A:</strong> <span class="greek-text">Γεια σας!</span>
+                                <span class="text-sm text-gray-600 block ml-20">Hello!</span>
+                            </div>
+                            <div>
+                                <strong>Person B:</strong> <span class="greek-text">Γεια σας! Πώς σας λένε;</span>
+                                <span class="text-sm text-gray-600 block ml-20">Hello! What's your name?</span>
+                            </div>
+                            <div>
+                                <strong>Person A:</strong> <span class="greek-text">Με λένε Μαρία. Κι εσάς;</span>
+                                <span class="text-sm text-gray-600 block ml-20">My name is Maria. And you?</span>
+                            </div>
+                            <div>
+                                <strong>Person B:</strong> <span class="greek-text">Με λένε Γιάννη. Χαίρομαι πολύ!</span>
+                                <span class="text-sm text-gray-600 block ml-20">My name is John. Nice to meet you!</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-primary/10 rounded-lg p-4 mb-4">
+                        <h4 class="font-semibold mb-2">Key Phrases:</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><span class="greek-text">Πώς σας λένε;</span> - What's your name? (formal)</li>
+                            <li><span class="greek-text">Με λένε...</span> - My name is...</li>
+                            <li><span class="greek-text">Χαίρομαι πολύ!</span> - Nice to meet you!</li>
+                        </ul>
+                    </div>
+                    <p class="mb-4">Congratulations! You've completed the basic Greek course!</p>
+                `,
+                quiz: [
+                    {
+                        question: "How do you ask someone's name formally?",
+                        options: ["Γεια σας", "Πώς σας λένε;", "Ευχαριστώ", "Συγγνώμη"],
+                        correct: 1
+                    },
+                    {
+                        question: "What does 'Με λένε Μαρία' mean?",
+                        options: ["Hello Maria", "My name is Maria", "Nice to meet you", "How are you?"],
+                        correct: 1
+                    },
+                    {
+                        question: "How do you say 'Nice to meet you!'?",
+                        options: ["Γεια σας!", "Ευχαριστώ!", "Χαίρομαι πολύ!", "Παρακαλώ!"],
+                        correct: 2
+                    }
+                ]
+            }
+        ];
+
+        // Greek Alphabet Data
+        const greekAlphabet = [
+            { letter: 'Α α', name: 'Alpha', english: 'a' },
+            { letter: 'Β β', name: 'Beta', english: 'b' },
+            { letter: 'Γ γ', name: 'Gamma', english: 'g' },
+            { letter: 'Δ δ', name: 'Delta', english: 'd' },
+            { letter: 'Ε ε', name: 'Epsilon', english: 'e' },
+            { letter: 'Ζ ζ', name: 'Zeta', english: 'z' },
+            { letter: 'Η η', name: 'Eta', english: 'e' },
+            { letter: 'Θ θ', name: 'Theta', english: 'th' },
+            { letter: 'Ι ι', name: 'Iota', english: 'i' },
+            { letter: 'Κ κ', name: 'Kappa', english: 'k' },
+            { letter: 'Λ λ', name: 'Lambda', english: 'l' },
+            { letter: 'Μ μ', name: 'Mu', english: 'm' },
+            { letter: 'Ν ν', name: 'Nu', english: 'n' },
+            { letter: 'Ξ ξ', name: 'Xi', english: 'x' },
+            { letter: 'Ο ο', name: 'Omicron', english: 'o' },
+            { letter: 'Π π', name: 'Pi', english: 'p' },
+            { letter: 'Ρ ρ', name: 'Rho', english: 'r' },
+            { letter: 'Σ σ/ς', name: 'Sigma', english: 's' },
+            { letter: 'Τ τ', name: 'Tau', english: 't' },
+            { letter: 'Υ υ', name: 'Upsilon', english: 'u' },
+            { letter: 'Φ φ', name: 'Phi', english: 'f' },
+            { letter: 'Χ χ', name: 'Chi', english: 'ch' },
+            { letter: 'Ψ ψ', name: 'Psi', english: 'ps' },
+            { letter: 'Ω ω', name: 'Omega', english: 'o' }
+        ];
+
+        // Practice Data
+        const practiceData = {
+            alphabet: greekAlphabet.map(item => ({ 
+                text: item.letter, 
+                label: `${item.name} (${item.english})` 
+            })),
+            words: [
+                { text: 'γεια', label: 'hello' },
+                { text: 'νερό', label: 'water' },
+                { text: 'φαγητό', label: 'food' },
+                { text: 'σπίτι', label: 'house' },
+                { text: 'μάμα', label: 'mom' }
+            ],
+            sentences: [
+                { text: 'Γεια σας!', label: 'Hello!' },
+                { text: 'Πώς είστε;', label: 'How are you?' },
+                { text: 'Καλά, ευχαριστώ', label: 'Fine, thank you' }
+            ]
+        };
+
+        // Sound Management
+        function playSound(type) {
+            if (!appState.soundEnabled) return;
+            
+            // Create simple audio feedback using Web Audio API
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            let frequency;
+            
+            switch(type) {
+                case 'success':
+                    frequency = 523.25; // C5
+                    break;
+                case 'celebration':
+                    // Play a celebratory sequence
+                    [523.25, 659.25, 783.99].forEach((freq, index) => {
+                        setTimeout(() => {
+                            const oscillator = audioContext.createOscillator();
+                            const gainNode = audioContext.createGain();
+                            oscillator.connect(gainNode);
+                            gainNode.connect(audioContext.destination);
+                            oscillator.frequency.value = freq;
+                            oscillator.type = 'sine';
+                            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                            oscillator.start(audioContext.currentTime);
+                            oscillator.stop(audioContext.currentTime + 0.3);
+                        }, index * 200);
+                    });
+                    return;
+                case 'error':
+                    frequency = 220; // A3
+                    break;
+                default:
+                    frequency = 440; // A4
+            }
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = frequency;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.2);
+        }
+
+        // UI Management
+        function updateUI() {
+            updateProgressDashboard();
+            renderLessons();
+            renderAlphabet();
+            updateHeader();
+        }
+
+        function updateProgressDashboard() {
+            const completed = appState.completedLessons.length;
+            const total = lessons.length;
+            const percentage = Math.round((completed / total) * 100);
+            
+            document.getElementById('completedLessons').textContent = completed;
+            document.getElementById('tokenCount').textContent = appState.totalTokens;
+            document.getElementById('progressPercent').textContent = `${percentage}%`;
+            document.getElementById('progressBar').style.width = `${percentage}%`;
+        }
+
+        function updateHeader() {
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    header.classList.add('bg-white/90', 'dark:bg-gray-900/90', 'backdrop-blur-md', 'shadow-lg');
+                } else {
+                    header.classList.remove('bg-white/90', 'dark:bg-gray-900/90', 'backdrop-blur-md', 'shadow-lg');
+                }
+            });
+        }
+
+        function renderLessons() {
+            const container = document.querySelector('#lessons .grid');
+            container.innerHTML = '';
+            
+            lessons.forEach((lesson, index) => {
+                const isCompleted = appState.completedLessons.includes(lesson.id);
+                const isLocked = index > 0 && !appState.completedLessons.includes(lessons[index - 1].id) && !appState.currentUser;
+                const needsLogin = index > 0 && !appState.currentUser;
+                
+                const card = document.createElement('div');
+                card.className = `bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 card-hover cursor-pointer ${isCompleted ? 'lesson-completed' : ''} ${isLocked ? 'lesson-locked' : ''}`;
+                
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold">${lesson.title}</h3>
+                        <div class="flex space-x-2">
+                            ${isCompleted ? '<span class="text-success text-2xl">✓</span>' : ''}
+                            ${isLocked ? '<span class="text-gray-400 text-2xl">🔒</span>' : ''}
+                        </div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">${lesson.description}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Lesson ${lesson.id}</span>
+                        <span class="text-sm text-accent font-semibold">+10 tokens</span>
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => {
+                    if (needsLogin && !isCompleted) {
+                        showModal('loginModal');
+                    } else if (!isLocked) {
+                        startLesson(lesson);
+                    }
+                });
+                
+                container.appendChild(card);
+            });
+        }
+
+        function renderAlphabet() {
+            const container = document.querySelector('#alphabet .grid');
+            container.innerHTML = '';
+            
+            greekAlphabet.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-white dark:bg-gray-900 rounded-xl shadow-lg p-4 text-center card-hover';
+                
+                card.innerHTML = `
+                    <div class="greek-letter text-3xl mb-2">${item.letter}</div>
+                    <div class="font-semibold text-sm mb-1">${item.name}</div>
+                    <div class="text-xs text-gray-500">${item.english}</div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Lesson Management
+        function startLesson(lesson) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 modal z-50 flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-4xl w-full max-h-90vh overflow-y-auto p-8 fade-in">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-3xl font-bold">${lesson.title}</h2>
+                        <button onclick="this.closest('.modal').remove()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="mb-8">
+                        ${lesson.content}
+                    </div>
+                    <div class="flex justify-end">
+                        <button onclick="startQuiz(${lesson.id}); this.closest('.modal').remove();" class="px-8 py-3 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors">
+                            Take Quiz
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function startQuiz(lessonId) {
+            const lesson = lessons.find(l => l.id === lessonId);
+            appState.currentQuiz = {
+                lessonId,
+                questions: lesson.quiz,
+                currentQuestion: 0,
+                score: 0
+            };
+            
+            showQuiz();
+        }
+
+        function showQuiz() {
+            const quiz = appState.currentQuiz;
+            const question = quiz.questions[quiz.currentQuestion];
+            
+            document.getElementById('quizTitle').textContent = `Lesson ${quiz.lessonId} Quiz`;
+            document.getElementById('quizProgress').textContent = `Question ${quiz.currentQuestion + 1} of ${quiz.questions.length}`;
+            
+            const content = document.getElementById('quizContent');
+            content.innerHTML = `
+                <div class="mb-8">
+                    <h4 class="text-lg font-semibold mb-4">${question.question}</h4>
+                    <div class="space-y-3">
+                        ${question.options.map((option, index) => `
+                            <button class="quiz-option w-full p-4 text-left border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" data-index="${index}">
+                                ${option}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // Add click handlers to options
+            content.querySelectorAll('.quiz-option').forEach(button => {
+                button.addEventListener('click', () => selectAnswer(parseInt(button.dataset.index)));
+            });
+            
+            showModal('quizModal');
+        }
+
+        function selectAnswer(selectedIndex) {
+            const quiz = appState.currentQuiz;
+            const question = quiz.questions[quiz.currentQuestion];
+            const isCorrect = selectedIndex === question.correct;
+            
+            if (isCorrect) {
+                quiz.score++;
+                playSound('success');
+            } else {
+                playSound('error');
+            }
+            
+            // Show feedback
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach((option, index) => {
+                if (index === question.correct) {
+                    option.classList.add('bg-green-100', 'dark:bg-green-900', 'border-green-500');
+                } else if (index === selectedIndex && !isCorrect) {
+                    option.classList.add('bg-red-100', 'dark:bg-red-900', 'border-red-500');
+                }
+                option.disabled = true;
+            });
+            
+            setTimeout(() => {
+                if (quiz.currentQuestion < quiz.questions.length - 1) {
+                    quiz.currentQuestion++;
+                    showQuiz();
+                } else {
+                    finishQuiz();
+                }
+            }, 1500);
+        }
+
+        function finishQuiz() {
+            const quiz = appState.currentQuiz;
+            const passed = quiz.score >= Math.ceil(quiz.questions.length * 0.6); // 60% to pass
+            
+            closeModal('quizModal');
+            
+            if (passed) {
+                // Mark lesson as completed
+                if (!appState.completedLessons.includes(quiz.lessonId)) {
+                    appState.completedLessons.push(quiz.lessonId);
+                    appState.totalTokens += 10;
+                    saveState();
+                    updateUI();
+                    
+                    // Show celebration
+                    document.getElementById('celebrationMessage').textContent = 
+                        `You scored ${quiz.score}/${quiz.questions.length} and completed Lesson ${quiz.lessonId}!`;
+                    showModal('celebrationModal');
+                    playSound('celebration');
+                }
+            } else {
+                // Show retry modal
+                showCustomModal('Quiz Failed', 
+                    `You scored ${quiz.score}/${quiz.questions.length}. You need at least ${Math.ceil(quiz.questions.length * 0.6)} correct answers to pass. Try again!`,
+                    'Try Again', () => {
+                        quiz.currentQuestion = 0;
+                        quiz.score = 0;
+                        showQuiz();
+                    });
+            }
+            
+            appState.currentQuiz = null;
+        }
+
+        // Practice Management
+        function initializePractice() {
+            const practiceSelect = document.getElementById('practiceSelect');
+            const currentPracticeDisplay = document.getElementById('currentPractice');
+            const practiceDisplayElement = document.getElementById('practiceDisplay');
+            
+            function updatePractice() {
+                const category = practiceSelect.value;
+                const data = practiceData[category];
+                const current = data[appState.currentPractice];
+                
+                currentPracticeDisplay.textContent = current.label;
+                practiceDisplayElement.textContent = current.text;
+            }
+            
+            practiceSelect.addEventListener('change', () => {
+                appState.currentPractice = 0;
+                updatePractice();
+            });
+            
+            document.getElementById('prevPractice').addEventListener('click', () => {
+                const category = practiceSelect.value;
+                const data = practiceData[category];
+                appState.currentPractice = Math.max(0, appState.currentPractice - 1);
+                updatePractice();
+            });
+            
+            document.getElementById('nextPractice').addEventListener('click', () => {
+                const category = practiceSelect.value;
+                const data = practiceData[category];
+                appState.currentPractice = Math.min(data.length - 1, appState.currentPractice + 1);
+                updatePractice();
+            });
+            
+            updatePractice();
+        }
+
+        // Modal Management
+        function showModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function showCustomModal(title, message, buttonText, onConfirm) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 modal z-50 flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-md w-full p-8 text-center fade-in">
+                    <h3 class="text-2xl font-bold mb-4">${title}</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">${message}</p>
+                    <div class="flex justify-center space-x-3">
+                        <button onclick="this.closest('.modal').remove()" class="px-6 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">Cancel</button>
+                        <button onclick="this.closest('.modal').remove(); (${onConfirm})()" class="px-6 py-3 bg-primary text-white hover:bg-blue-600 rounded-lg transition-colors">${buttonText}</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load application state
+            loadState();
+            
+            // Initialize dark mode
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+            
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+                if (event.matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            });
+            
+            // Sound toggle
+            document.getElementById('soundToggle').addEventListener('click', () => {
+                appState.soundEnabled = !appState.soundEnabled;
+                const button = document.getElementById('soundToggle');
+                if (appState.soundEnabled) {
+                    button.classList.remove('sound-off');
+                } else {
+                    button.classList.add('sound-off');
+                }
+                saveState();
+                playSound('success');
+            });
+            
+            // Mobile menu toggle
+            document.getElementById('mobileMenuToggle').addEventListener('click', () => {
+                const menu = document.getElementById('mobileMenu');
+                menu.classList.toggle('hidden');
+            });
+            
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                if (username && password && password.length === 5) {
+                    appState.currentUser = { username, password };
+                    saveState();
+                    updateUI();
+                    closeModal('loginModal');
+                    playSound('success');
+                }
+            });
+            
+            // Initialize practice section
+            initializePractice();
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Close mobile menu when clicking navigation links
+            document.querySelectorAll('#mobileMenu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.getElementById('mobileMenu').classList.add('hidden');
+                });
+            });
+        });
+
+        // Global functions for modal management
+        window.showModal = showModal;
+        window.closeModal = closeModal;
+    </script>
+</body>
+</html>
